@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Enertia Email Signature</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; color: #24292f; background: #f6f8fa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+    main { width: min(100%, 720px); padding: 40px; background: #fff; border: 1px solid #d0d7de; border-radius: 12px; box-shadow: 0 8px 24px #1f23280d; }
+    h1 { margin: 0 0 10px; font-size: clamp(1.6rem, 4vw, 2rem); }
+    p { line-height: 1.55; color: #57606a; }
+    .preview { margin: 28px 0 18px; min-height: 100px; display: grid; place-items: center; padding: 12px; border: 1px dashed #d0d7de; border-radius: 8px; background: #fff; }
+    .preview img { display: block; max-width: 100%; height: auto; }
+    .missing { margin: 0; font-size: .9rem; }
+    .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    a.button { display: inline-block; padding: 10px 14px; border-radius: 6px; background: #0969da; color: white; text-decoration: none; font-weight: 600; }
+    a.secondary { background: #f6f8fa; color: #0969da; border: 1px solid #d0d7de; }
+    code { overflow-wrap: anywhere; }
+    @media (max-width: 520px) { main { padding: 24px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Enertia Email Signature</h1>
+    <p>Use the stable GIF link below in your Outlook signature. The image is served from this GitHub Pages site.</p>
+    <div class="preview">
+      <img src="signature.gif" alt="Enertia email signature animation" onerror="this.hidden=true; document.getElementById('missing').hidden=false">
+      <p class="missing" id="missing" hidden>The GIF file hasn’t been added yet. Add the animation to this repository as <code>signature.gif</code> and it will appear here.</p>
+    </div>
+    <p><strong>GIF URL:</strong> <code id="gif-url"></code></p>
+    <div class="links">
+      <a class="button" href="signature.gif" download>Download the GIF</a>
+      <a class="button secondary" href="#" id="copy-link">Copy GIF link</a>
+    </div>
+  </main>
+  <script>
+    const gifUrl = new URL('signature.gif', window.location.href).href;
+    document.getElementById('gif-url').textContent = gifUrl;
+    document.getElementById('copy-link').addEventListener('click', async (event) => {
+      event.preventDefault();
+      try {
+        await navigator.clipboard.writeText(gifUrl);
+        event.currentTarget.textContent = 'Copied!';
+        setTimeout(() => { event.currentTarget.textContent = 'Copy GIF link'; }, 1800);
+      } catch {
+        window.prompt('Copy this GIF URL:', gifUrl);
+      }
+    });
+  </script>
+</body>
+</html>
